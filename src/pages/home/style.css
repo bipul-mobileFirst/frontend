@@ -1,0 +1,7 @@
+.postContainer{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 20px;
+    border: 1px solid blue;
+}

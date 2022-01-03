@@ -1,0 +1,68 @@
+.login{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: white;
+    background-image: url("https://th.bing.com/th/id/R.740433b7366e8dbb2b5e0d9da14c03e5?rik=iTsLRxQr3WS0Zg&riu=http%3a%2f%2fwww.pixelstalk.net%2fwp-content%2fuploads%2f2016%2f11%2fFoggy-Forest-Backgrounds-Free-Download.jpg&ehk=w5UoyhiSpShsWsjjQEnTceC84KwF2%2ffcftIoDRoYuOc%3d&risl=&pid=ImgRaw&r=0");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.loginContainer{
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    
+   
+}
+.loginWrapper{
+    width: 30%;
+    display: flex;
+    padding: 40px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 2px solid white;
+    
+    background: transparent;
+    
+}
+.input{
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    border: none;
+}
+.button{
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px 20px 15px 20px;
+    border: none;
+    background-color: #2bab91;
+    color: white;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+.spanLogin{
+    margin-top: 20px;
+}
+.error{
+margin-Bottom: 20px;
+color: white;
+width: 30%;
+background-color: red;
+text-align: center;
+padding: 2px;
+font-weight: 600;
+}
+
+@media screen and (max-width:480px){
+    .loginWrapper{
+        width: 100%;
+    
+    }
+}
