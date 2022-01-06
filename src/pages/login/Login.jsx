@@ -27,7 +27,7 @@ const Login = () => {
         userDetails
       );
       setIsLoading("");
-      localStorage.setItem("user", JSON.stringify(res.data.accesstoken));
+      localStorage.setItem("user", JSON.stringify(res.data));
       dispatch({
         type: "USER_LOGIN",
         user: res.data,

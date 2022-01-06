@@ -16,4 +16,48 @@
     width: 100%;
     height: 30vh;
 }
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 30%;
+    padding: 10px;
+    margin: 20px 0px 10px 40px;
+  }
 
+  .titlePost{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px 10px;
+      background-color: white;
+      color: black;
+      font-size: 14px;
+  }
+
+  .eventsController{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      /* background-color: burlywood; */
+      padding: 10px;
+  }
+  .linksEditDelete{
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+  }
+  .deleteButton{
+      background-color: #D84120;
+      width: 70px;
+      padding: 5px 10px 5px 10px;
+      text-align: center;
+      color: white;
+      
+  }
+  .editButton{
+      background-color: #0999DE;
+      width: 60px;
+      padding: 5px 10px 5px 10px;
+      text-align: center;
+      color: white;
+  }
