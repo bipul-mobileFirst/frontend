@@ -1,7 +1,9 @@
 export const initialState = {
   user: null,
   token: "",
-  allUsers: null,
+  allUsers: [],
+  allPosts: [],
+  singleUser: null,
 };
 
 const reducer = (state, action) => {
@@ -15,6 +17,11 @@ const reducer = (state, action) => {
       return {
         allUsers: action.allUsers,
       };
+    case "SET_ALL_POSTS":
+      return {
+        allPosts: action.allPosts,
+      };
+
     case "LOG_OUT":
       return {
         user: "",

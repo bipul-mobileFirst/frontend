@@ -6,8 +6,8 @@ import { useStateValue } from "../../contextApi/state";
 import "./style.css";
 const Home = () => {
   const [post, setPost] = useState([]);
-  const [{ user }, dispatch] = useStateValue();
-  console.log("user", user);
+  const [{ user, allPosts }, dispatch] = useStateValue();
+  console.log("all post", allPosts);
   useEffect(() => {
     const getPost = async () => {
       try {
@@ -15,6 +15,10 @@ const Home = () => {
           "http://localhost:5000/api/public/post/all"
         );
         console.log(res.data);
+        dispatch({
+          type: "SET_ALL_POSTS",
+          allPosts: res.data,
+        });
         setPost(res.data);
       } catch (error) {
         console.log(error);

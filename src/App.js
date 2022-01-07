@@ -14,7 +14,8 @@ import Navbar from "./components/navbar/Navbar";
 import Activeusers from "./components/activeUsers/ActiveUsers";
 import User from "./components/user/User";
 import Create from "./components/createPost/Create";
-
+import ReactModal from "react-modal";
+ReactModal.setAppElement("#root");
 const App = () => {
   const [{ user, token }, dispatch] = useStateValue();
 
@@ -36,15 +37,15 @@ const App = () => {
         />
         <Route
           path="/users"
-          element={data.isAdmin ? <User /> : <Navigate to="/" />}
+          element={data?.isAdmin ? <User /> : <Navigate to="/" />}
         />
         <Route
           path="/active/user"
-          element={data.isAdmin ? <Activeusers /> : <Navigate to="/" />}
+          element={data?.isAdmin ? <Activeusers /> : <Navigate to="/" />}
         />
         <Route
           path="/create"
-          element={data.isAdmin ? <Create /> : <Navigate to="/" />}
+          element={data?.isAdmin ? <Create /> : <Navigate to="/" />}
         />
         <Route path="*" element={<Notfound />} />
       </Routes>

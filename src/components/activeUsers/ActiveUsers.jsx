@@ -40,7 +40,7 @@ const Activeusers = () => {
 
         {activeUser.map((actives) => (
           <>
-            <tr>
+            <tr key={actives._id}>
               <td>{actives.username}</td>
               <td>{actives.email}</td>
               <td>{actives.city}</td>

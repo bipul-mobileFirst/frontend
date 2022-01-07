@@ -61,3 +61,31 @@
       text-align: center;
       color: white;
   }
+  .buttonContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  .editUpdateButton{
+    padding: 10px;
+    width: 30%;
+    margin-top: 20px;
+    border: none;
+    background-color: darkslateblue;
+    color: white;
+    cursor: pointer;
+  }
+  .editUpdateButton:disabled{
+      cursor: not-allowed;
+      background-color: gray;
+  }
+  .editCloseButton{
+    padding: 10px;
+    width: 30%;
+    margin-top: 20px;
+    border: none;
+    background-color: red;
+    color: white;
+    cursor: pointer;
+  }

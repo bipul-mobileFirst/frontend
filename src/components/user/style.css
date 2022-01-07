@@ -29,3 +29,25 @@
     background-color: #04AA6D;
     color: white;
   }
+  .editButtonUsers{
+    width: 100%;
+    border: none;
+    padding: 10px;
+    background-color: lightblue;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .deleteButtonUsers{
+    width: 100%;
+    border: none;
+    padding: 10px;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .deletedButton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
