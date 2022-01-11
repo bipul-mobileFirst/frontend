@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import Modal from "react-modal";
-import { useStateValue } from "../../contextApi/state";
-
+import { useDispatch, useSelector } from "react-redux";
+import { allUsers } from "../../redux/AdminRedux";
 import "./style.css";
 
 const customStyles = {
@@ -27,7 +27,10 @@ const customStyles = {
 
 const User = () => {
   const [user, setUser] = useState([]);
-  const [{ allUsers }, dispatch] = useStateValue();
+  const dispatch = useDispatch();
+  const { allUser, currentUser } = useSelector((state) => state.users);
+  console.log("cuurent user", currentUser);
+  console.log("alll users", allUser);
   const [isOpen, setIsOpen] = useState(false);
   const [singleUser, setSingleUser] = useState("");
 
@@ -43,13 +46,12 @@ const User = () => {
     const userId = e;
     console.log("idd", userId);
     try {
-      const adminToken = JSON.parse(localStorage.getItem("user"));
-      console.log(adminToken.accesstoken);
       await axios.delete(`http://localhost:5000/api/user/delete/${userId}`, {
         headers: {
-          token: `Bearer ${adminToken.accesstoken}`,
+          token: `Bearer ${currentUser.accesstoken}`,
         },
       });
+
       alert("user deleted!");
       window.location.reload();
     } catch (error) {
@@ -58,15 +60,13 @@ const User = () => {
   };
 
   const getUser = (e) => {
-    setSingleUser(user.find((u) => u._id === e));
+    setSingleUser(allUser.find((u) => u._id === e));
   };
 
   const handleUpdateUser = async (e) => {
     e.preventDefault();
 
     try {
-      const adminToken = JSON.parse(localStorage.getItem("user"));
-
       const res = await axios.put(
         "http://localhost:5000/api/user/update/" + singleUser._id,
         {
@@ -81,7 +81,7 @@ const User = () => {
         },
         {
           headers: {
-            token: `Bearer ${adminToken.accesstoken}`,
+            token: `Bearer ${currentUser.accesstoken}`,
           },
         }
       );
@@ -94,21 +94,15 @@ const User = () => {
   useEffect(() => {
     const getAllUsers = async () => {
       try {
-        const adminToken = JSON.parse(localStorage.getItem("user"));
-
         const res = await axios.get(
           "http://localhost:5000/api/admin/users/all/users",
           {
             headers: {
-              token: `Bearer ${adminToken.accesstoken}`,
+              token: `Bearer ${currentUser.accesstoken}`,
             },
           }
         );
-        dispatch({
-          type: "SET_ALL_USERS",
-          allUsers: res.data,
-        });
-        setUser(res.data);
+        dispatch(allUsers(res.data));
       } catch (error) {
         console.log(error);
       }
@@ -132,7 +126,7 @@ const User = () => {
           <th>Edit</th>
         </tr>
 
-        {user.map((user) => (
+        {allUser.map((user) => (
           <>
             <tr key={user._id}>
               <td>{user.username}</td>

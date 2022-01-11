@@ -1,14 +1,17 @@
 import React, { useRef, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
-import { useStateValue } from "../../contextApi/state";
+// import { useStateValue } from "../../contextApi/state";
 import ReactLoading from "react-loading";
+import { loginSuccess } from "../../redux/AdminRedux";
+import { useDispatch } from "react-redux";
 
 import "./style.css";
 const Login = () => {
+  const dispatch = useDispatch();
   const email = useRef();
   const password = useRef();
-  const [{}, dispatch] = useStateValue();
+  // const [{}, dispatch] = useStateValue();
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState("");
 
@@ -28,12 +31,7 @@ const Login = () => {
       );
       setIsLoading("");
       localStorage.setItem("user", JSON.stringify(res.data));
-      dispatch({
-        type: "USER_LOGIN",
-        user: res.data,
-        token: res.data.accesstoken,
-      });
-      // Navigate("/");
+      dispatch(loginSuccess(res.data));
     } catch (error) {
       setIsLoading("");
       setError(true);

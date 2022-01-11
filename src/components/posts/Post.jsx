@@ -4,6 +4,7 @@ import { useStateValue } from "../../contextApi/state";
 import axios from "axios";
 import Modal from "react-modal";
 import "./style.css";
+import { useSelector } from "react-redux";
 const customStyles = {
   content: {
     width: "30%",
@@ -22,19 +23,16 @@ const customStyles = {
     backgroundColor: "transparent",
   },
 };
-const Post = ({ image, title, id }) => {
-  const [{ user }, dispatch] = useStateValue();
+const Post = ({ image, title, id, liked }) => {
+  const { currentUser, isAdmin } = useSelector((state) => state.users);
   const [isOpen, setIsOpen] = useState(false);
   const [photo, setPhoto] = useState("");
   const [postTitle, setPostTitle] = useState("");
   const [postId, setPostId] = useState("");
-  console.log("idd", postId);
-
-  const admin = JSON.parse(localStorage.getItem("user"));
+  const [like, setLike] = useState(false);
 
   const handleUpatePost = async (e) => {
     const id = e;
-    const adminToken = JSON.parse(localStorage.getItem("user"));
     if (photo) {
       const data = new FormData();
       const filename = photo.name;
@@ -47,7 +45,7 @@ const Post = ({ image, title, id }) => {
           data,
           {
             headers: {
-              token: `Bearer ${adminToken.accesstoken}`,
+              token: `Bearer ${currentUser.accesstoken}`,
             },
           }
         );
@@ -63,7 +61,7 @@ const Post = ({ image, title, id }) => {
           { title: postTitle },
           {
             headers: {
-              token: `Bearer ${adminToken.accesstoken}`,
+              token: `Bearer ${currentUser.accesstoken}`,
             },
           }
         );
@@ -82,7 +80,7 @@ const Post = ({ image, title, id }) => {
     try {
       await axios.delete(`http://localhost:5000/api/admin/post/${id}`, {
         headers: {
-          token: `Bearer ${admin.accesstoken}`,
+          token: `Bearer ${currentUser.accesstoken}`,
         },
       });
       console.log("post deleted!");
@@ -92,6 +90,29 @@ const Post = ({ image, title, id }) => {
       console.log("Delete error", error);
     }
   };
+
+  const handleLike = async (e) => {
+    const postId = e.target.value;
+    console.log(postId);
+    try {
+      const res = await axios.put(
+        `http://localhost:5000/api/public/post/liked/single/${postId}`,
+        {},
+        {
+          headers: {
+            token: `Bearer ${currentUser.accesstoken}`,
+          },
+        }
+      );
+      console.log("res", res);
+      setLike(!like);
+    } catch (error) {
+      console.log(JSON.parse(error));
+    }
+  };
+  useEffect(() => {
+    setLike(liked.includes(currentUser._id));
+  }, [currentUser._id, liked]);
   return (
     <>
       <div className="card">
@@ -101,7 +122,7 @@ const Post = ({ image, title, id }) => {
           alt="image"
         />
         <hr />
-        {admin.isAdmin ? (
+        {isAdmin ? (
           <>
             <div className="eventsController" key={id}>
               <button
@@ -121,7 +142,23 @@ const Post = ({ image, title, id }) => {
             </div>
           </>
         ) : (
-          <span className="titlePost">Title: {title}</span>
+          <div className="userEventsContainer">
+            {like ? (
+              <button
+                value={id}
+                onClick={handleLike}
+                className="likeButton liked"
+              >
+                Liked
+              </button>
+            ) : (
+              <button value={id} onClick={handleLike} className="likeButton ">
+                Like
+              </button>
+            )}
+
+            <span className="titlePost">Title: {title}</span>
+          </div>
         )}
         {/* <span className="titlePost">{title}</span> */}
       </div>

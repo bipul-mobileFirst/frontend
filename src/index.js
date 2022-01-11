@@ -2,15 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import { StateProvider } from "./contextApi/state";
-import reducer, { initialState } from "./contextApi/reducer";
+// import { StateProvider } from "./contextApi/state";
+// import reducer, { initialState } from "./contextApi/reducer";
+import { PersistGate } from "redux-persist/integration/react";
+import { Provider } from "react-redux";
+import { store, persistor } from "./redux/store";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <StateProvider initialState={initialState} reducer={reducer}>
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
       <App />
-    </StateProvider>
-  </React.StrictMode>,
+    </PersistGate>
+  </Provider>,
   document.getElementById("root")
 );
 

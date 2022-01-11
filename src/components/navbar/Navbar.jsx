@@ -1,19 +1,20 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { useStateValue } from "../../contextApi/state";
+import { logOutUsers } from "../../redux/AdminRedux";
 import "./style.css";
 const Navbar = () => {
-  const [{ user, token }, dispatch] = useStateValue();
-  const [logout, setLogout] = useState("");
+  // const [{ user, token }, dispatch] = useStateValue();
+  const { isAdmin } = useSelector((state) => state.users);
+  const dispatch = useDispatch();
+  // const [logout, setLogout] = useState("");
   const [active, setActive] = useState("");
 
-  const userDetails = JSON.parse(localStorage.getItem("user"));
+  // const userDetails = JSON.parse(localStorage.getItem("user"));
   const handleLogOut = (e) => {
     e.preventDefault();
-    dispatch({
-      type: "LOG_OUT",
-    });
-    localStorage.setItem("user", JSON.stringify(logout));
+    dispatch(logOutUsers());
   };
   const headers = [
     { name: "Home", class: "activeHome", path: "/" },
@@ -28,7 +29,7 @@ const Navbar = () => {
       <div className="right" style={{ cursor: "pointer" }}>
         {/* <span onClick={handleLogOut}>Log out</span> */}
 
-        {userDetails.isAdmin &&
+        {isAdmin &&
           headers.map((title) => (
             <>
               <Link to={title.path}>
@@ -44,6 +45,12 @@ const Navbar = () => {
               </Link>
             </>
           ))}
+        {!isAdmin && (
+          <span onClick={handleLogOut} className="logout">
+            liked Post
+          </span>
+        )}
+
         <span onClick={handleLogOut} className="logout">
           logout
         </span>

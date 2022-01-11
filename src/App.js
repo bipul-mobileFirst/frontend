@@ -15,37 +15,42 @@ import Activeusers from "./components/activeUsers/ActiveUsers";
 import User from "./components/user/User";
 import Create from "./components/createPost/Create";
 import ReactModal from "react-modal";
+import { useSelector } from "react-redux";
 ReactModal.setAppElement("#root");
 const App = () => {
-  const [{ user, token }, dispatch] = useStateValue();
-
-  const data = JSON.parse(localStorage.getItem("user"));
+  // const [{ user, token }, dispatch] = useStateValue();
+  const { currentUser, isAdmin } = useSelector((state) => state.users);
+  console.log("users", currentUser);
+  // const data = JSON.parse(localStorage.getItem("user"));
 
   return (
     <Router>
-      {data && <Navbar />}
+      {currentUser && <Navbar />}
 
       <Routes>
-        <Route path="/" element={data ? <Home /> : <Navigate to="/login" />} />
+        <Route
+          path="/"
+          element={currentUser ? <Home /> : <Navigate to="/login" />}
+        />
         <Route
           path="/login"
-          element={!data ? <Login /> : <Navigate to="/" />}
+          element={!currentUser ? <Login /> : <Navigate to="/" />}
         />
         <Route
           path="/register"
-          element={!data ? <Register /> : <Navigate to="/" />}
+          element={!currentUser ? <Register /> : <Navigate to="/" />}
         />
         <Route
           path="/users"
-          element={data?.isAdmin ? <User /> : <Navigate to="/" />}
+          element={isAdmin ? <User /> : <Navigate to="/" />}
         />
         <Route
           path="/active/user"
-          element={data?.isAdmin ? <Activeusers /> : <Navigate to="/" />}
+          element={isAdmin ? <Activeusers /> : <Navigate to="/" />}
         />
         <Route
           path="/create"
-          element={data?.isAdmin ? <Create /> : <Navigate to="/" />}
+          element={isAdmin ? <Create /> : <Navigate to="/" />}
         />
         <Route path="*" element={<Notfound />} />
       </Routes>

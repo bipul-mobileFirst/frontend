@@ -1,25 +1,26 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+// import Posts from "../../../../../mern projects/social-media/backend/model/Posts";
 import Navbar from "../../components/navbar/Navbar";
 import Post from "../../components/posts/Post";
-import { useStateValue } from "../../contextApi/state";
+// import { useStateValue } from "../../contextApi/state";
 import "./style.css";
 const Home = () => {
   const [post, setPost] = useState([]);
-  const [{ user, allPosts }, dispatch] = useStateValue();
-  console.log("all post", allPosts);
+  console.log("paaa", post);
+  // const [{ user, allPosts }, dispatch] = useStateValue();
+  // console.log("all post", allPosts);
   useEffect(() => {
     const getPost = async () => {
       try {
         const res = await axios.get(
           "http://localhost:5000/api/public/post/all"
         );
-        console.log(res.data);
-        dispatch({
-          type: "SET_ALL_POSTS",
-          allPosts: res.data,
-        });
-        setPost(res.data);
+        setPost(
+          res.data.sort((a, b) => {
+            return new Date(b.createdAt) - new Date(a.createdAt);
+          })
+        );
       } catch (error) {
         console.log(error);
       }
@@ -35,6 +36,7 @@ const Home = () => {
             image={item.image}
             title={item.title}
             id={item._id}
+            liked={item.likes}
           />
         ))}
       </div>

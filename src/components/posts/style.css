@@ -32,6 +32,7 @@
       background-color: white;
       color: black;
       font-size: 14px;
+      margin-left: 40px;
   }
 
   .eventsController{
@@ -89,3 +90,18 @@
     color: white;
     cursor: pointer;
   }
+  .userEventsContainer{
+      display: flex;
+      align-items: center;
+      justify-content:flex-start
+  }
+  .likeButton{
+      border: none;
+      padding: 10px;
+      width: 70px;
+  }
+  .liked{
+      background-color: #0ca4d6;
+      color: white;
+  }
+  
